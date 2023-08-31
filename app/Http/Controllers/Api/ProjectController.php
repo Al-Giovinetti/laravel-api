@@ -10,7 +10,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::whit('type')->paginate(20);
+        $projects = Project::with('type')->paginate(20);
         return response()->json(
             [
                 'success'=>true,
@@ -18,4 +18,15 @@ class ProjectController extends Controller
             ]
         );
     }
-}
+
+    public function show(Int $id)
+    {
+        $project = Project::with('type')->findorfail($id);
+        return response()->json(
+            [
+                'success'=>true,
+                'results'=>$project
+            ]
+        );
+    }
+};
